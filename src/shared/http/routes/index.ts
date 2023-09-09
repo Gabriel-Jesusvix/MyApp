@@ -3,7 +3,7 @@ import { Router } from 'express'
 const routes = Router()
 
 routes.get('/', (request, response) => {
-  return response.json({ message: 'Olá' })
+  throw new Error('Acesso negado!', 401)
 })
 
 export { routes }
