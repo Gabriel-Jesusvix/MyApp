@@ -7,8 +7,11 @@ const rolesRepository = new RoleRepository()
 rolesRoutes.post('/', (request, response) => {
   const { name } = request.body
 
-  if (!name) {
-    response.status(404).json({ message: 'Name is required!' })
+  const roleAlreadyExists = rolesRepository.findByName(name)
+  if (roleAlreadyExists) {
+    response
+      .status(400)
+      .json({ message: 'Role exists, try again role diferent!' })
   }
 
   const role = rolesRepository.create({
