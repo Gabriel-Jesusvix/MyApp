@@ -5,8 +5,18 @@ type CreateRoleDTO = {
 }
 export class RoleRepository {
   private roles: Role[] = []
-  constructor() {
+  private static INSTANCE: RoleRepository
+
+  private constructor() {
     this.roles = []
+  }
+  public static getInstance(): RoleRepository {
+    // Verify instance of class
+    if (!RoleRepository.INSTANCE) {
+      RoleRepository.INSTANCE = new RoleRepository()
+    }
+
+    return RoleRepository.INSTANCE
   }
 
   create({ name }: CreateRoleDTO): Role {
