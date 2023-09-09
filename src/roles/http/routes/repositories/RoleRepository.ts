@@ -9,7 +9,7 @@ export class RoleRepository {
     this.roles = []
   }
 
-  create({ name }: CreateRoleDTO) {
+  create({ name }: CreateRoleDTO): Role {
     const role = new Role()
 
     Object.assign(role, { name, created_at: new Date() }) // merge with existing role
@@ -17,5 +17,9 @@ export class RoleRepository {
     this.roles.push(role)
 
     return role
+  }
+
+  findaAll(): Role[] {
+    return this.roles
   }
 }
