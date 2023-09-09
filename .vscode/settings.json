@@ -1,0 +1,8 @@
+ {
+
+   "workbench.colorCustomizations":{
+     "editorLineNumber.foreground": "#1051f6",
+    },
+    "workbench.colorTheme": "Community Material Theme Darker",
+    "editor.fontFamily": "Fira Code"
+  }
