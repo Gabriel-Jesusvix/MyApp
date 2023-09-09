@@ -8,5 +8,48 @@
       "name": "Gabriel Jesus",
       "email": "gabriel.developer2@gmail.com"
     }
+  },
+  "paths": {
+    "/roles": {
+      "post": {
+        "tags": [
+          "Role"
+        ],
+        "summary": "Create a  role",
+        "description": "create a new role",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "role created"
+          },
+          "400": {
+            "description": "Role already exists"
+          }
+        }
+      },
+      "get": {
+        "tags": ["Role"],
+        "summary": "list all role",
+        "description": "return list all roles paginated",
+        "responses": {
+          "200": {
+            "description": "success all roles"
+          }
+        }
+      }
+    }
   }
 }
