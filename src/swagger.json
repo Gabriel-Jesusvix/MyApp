@@ -1,0 +1,12 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "Api of the role documentation",
+    "description": "Api from the role to users",
+    "version": "0.0.1",
+    "contact": {
+      "name": "Gabriel Jesus",
+      "email": "gabriel.developer2@gmail.com"
+    }
+  }
+}
