@@ -1,7 +1,14 @@
-export class AppServer {
-  private app: string
+import express from 'express'
+import 'express-async-errors'
+import cors from 'cors'
+const app = express()
 
-  constructor(info: string) {
-    this.app = info ?? 'Olá dev'
-  }
-}
+app.use(express.json())
+app.use(cors())
+app.get('/', (request, response) => {
+  return response.json({ message: 'Olá' })
+})
+
+app.listen(3000, () => {
+  console.log('listening on port 3000🚀')
+})
