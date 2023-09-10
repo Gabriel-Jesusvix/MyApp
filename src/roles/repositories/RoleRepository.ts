@@ -1,17 +1,32 @@
 import { Role } from '@roles/entities/Role'
+import { dataSource } from '@shared/typeorm/'
+import { Repository } from 'typeorm'
 
 type CreateRoleDTO = {
   name: string
 }
+
+export type PaginateParams = {
+  page: number
+  skip: number
+  take: number
+}
+
+export type RolesPaginateProperties = {
+  per_page: number
+  total: number
+  current: number
+  data: Role[]
+}
 export class RoleRepository {
-  private roles: Role[] = []
+  private repository: Repository<Role>
   private static INSTANCE: RoleRepository
 
   private constructor() {
-    this.roles = []
+    this.repository = dataSource.getRepository(Role)
   }
   public static getInstance(): RoleRepository {
-    // Verify instance of class
+    // Verify instance of class exists
     if (!RoleRepository.INSTANCE) {
       RoleRepository.INSTANCE = new RoleRepository()
     }
@@ -19,21 +34,50 @@ export class RoleRepository {
     return RoleRepository.INSTANCE
   }
 
-  create({ name }: CreateRoleDTO): Role {
-    const role = new Role()
+  async create({ name }: CreateRoleDTO): Promise<Role> {
+    const role = this.repository.create({
+      name,
+    })
 
-    Object.assign(role, { name, created_at: new Date() }) // merge with existing role
-
-    this.roles.push(role)
-
-    return role
+    return this.repository.save(role)
   }
 
-  findaAll(): Role[] {
-    return this.roles
+  async save(role: Role): Promise<Role> {
+    return this.repository.save(role)
   }
 
-  findByName(name: string): Role | undefined {
-    return this.roles.find(role => role.name === name)
+  async delete(role: Role): Promise<void> {
+    await this.repository.remove(role)
+  }
+  findByName(name: string): Promise<Role | null> {
+    return this.repository.findOneBy({
+      name,
+    })
+  }
+
+  async findById(id: string): Promise<Role | null> {
+    return this.repository.findOneBy({
+      id,
+    })
+  }
+  async findaAll({
+    page,
+    skip,
+    take,
+  }: PaginateParams): Promise<RolesPaginateProperties> {
+    const [roles, count] = await this.repository
+      .createQueryBuilder()
+      .skip(skip)
+      .take(take)
+      .getManyAndCount()
+
+    const result = {
+      per_page: take,
+      total: count,
+      current: page,
+      data: roles,
+    }
+
+    return result
   }
 }
