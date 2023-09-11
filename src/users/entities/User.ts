@@ -4,7 +4,9 @@ import {
   Column,
   PrimaryGeneratedColumn,
   CreateDateColumn,
+  ManyToOne,
 } from 'typeorm'
+import { Role } from '@roles/entities/Role'
 
 @Entity('users')
 export class User {
@@ -25,6 +27,11 @@ export class User {
 
   @Column()
   isAdmin: string
+
+  @ManyToOne(() => Role, {
+    cascade: true,
+  })
+  role: Role
 
   @CreateDateColumn()
   created_at: Date
