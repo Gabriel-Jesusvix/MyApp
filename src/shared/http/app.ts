@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 
 import 'express-async-errors'
+import '@shared/container'
 import swaggerUi from 'swagger-ui-express'
 import cors from 'cors'
 import { errors } from 'celebrate'
@@ -8,7 +9,6 @@ import { routes } from '@shared/http/routes'
 import { AppError } from '@shared/errors/AppError'
 import express, { NextFunction, Request, Response } from 'express'
 import swaggerFile from '../../swagger.json'
-
 const app = express()
 
 app.use(express.json())

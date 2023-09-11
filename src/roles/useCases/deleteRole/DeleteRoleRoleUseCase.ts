@@ -1,11 +1,16 @@
-import { RoleRepository } from '@roles/repositories/RoleRepository'
+import { IRolesRepository } from '@roles/repositories/IRolesRepository'
 import { AppError } from '@shared/errors/AppError'
+import { injectable, inject } from 'tsyringe'
 
 type UpdateRoleParams = {
   id: string
 }
+@injectable()
 export class DeleteRoleRoleUseCase {
-  constructor(private rolesRepository: RoleRepository) {}
+  constructor(
+    @inject('RolesRepository')
+    private rolesRepository: IRolesRepository,
+  ) {}
 
   async execute({ id }: UpdateRoleParams): Promise<void> {
     const role = await this.rolesRepository.findById(id)
