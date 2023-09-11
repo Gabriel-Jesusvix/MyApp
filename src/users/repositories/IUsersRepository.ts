@@ -18,12 +18,12 @@ export type PaginateParams = {
 export type UsersPaginateProperties = {
   per_page: number
   total: number
-  current: number
+  current_page: number
   data: User[]
 }
 
 export interface IUsersRepository {
-  create({ name, email, password, isAdmin, role }: CreateUserDTO): Promise<Role>
+  create({ name, email, password, isAdmin, role }: CreateUserDTO): Promise<User>
   save(user: User): Promise<User>
   findAll({
     page,
