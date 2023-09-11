@@ -60,7 +60,7 @@ export class RoleRepository {
       id,
     })
   }
-  async findaAll({
+  async findAll({
     page,
     skip,
     take,

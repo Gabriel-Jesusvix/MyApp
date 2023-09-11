@@ -6,7 +6,7 @@ import {
   CreateDateColumn,
 } from 'typeorm'
 
-@Entity()
+@Entity('roles')
 export class Role {
   @PrimaryGeneratedColumn()
   id?: string
