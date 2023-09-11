@@ -1,5 +1,5 @@
 import { Request, Response } from 'express'
-import { UpdateRoleRoleUseCase } from './updateRoleRoleUseCase'
+import { UpdateRoleRoleUseCase } from './UpdateRoleRoleUseCase'
 
 export class UpdateRoleController {
   constructor(private updateRoleRoleUseCase: UpdateRoleRoleUseCase) {}
