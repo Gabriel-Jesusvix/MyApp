@@ -7,6 +7,7 @@ import {
   ManyToOne,
 } from 'typeorm'
 import { Role } from '@roles/entities/Role'
+import { Exclude } from 'class-transformer'
 
 @Entity('users')
 export class User {
@@ -20,6 +21,7 @@ export class User {
   email: string
 
   @Column()
+  @Exclude()
   password: string
 
   @Column()
