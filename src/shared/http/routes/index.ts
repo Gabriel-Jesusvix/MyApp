@@ -4,10 +4,6 @@ import { Router } from 'express'
 
 const routes = Router()
 
-routes.get('/', (request, response) => {
-  return response.json({ message: 'Hello world!' })
-})
-
 routes.use('/roles', rolesRoutes)
 routes.use('/users', usersRoutes)
 export { routes }

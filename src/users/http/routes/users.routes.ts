@@ -4,13 +4,17 @@ import { CreateUserController } from '@users/useCases/createUser/CreateUserContr
 import { ListUsersController } from '@users/useCases/listUsers/ListUsersController'
 import { Segments, celebrate, Joi } from 'celebrate'
 import { Router } from 'express'
+import multer from 'multer'
 import { container } from 'tsyringe'
+import uploadConfig from '@config/upload'
+import { UpdateAvatarController } from '@users/useCases/updateAvatar/UpdateAvatarController'
 
 const usersRoutes = Router()
-
 const createUserController = container.resolve(CreateUserController)
 const createLoginController = container.resolve(CreateLoginController)
 const listUserController = container.resolve(ListUsersController)
+const updateAvatarController = container.resolve(UpdateAvatarController)
+const upload = multer(uploadConfig)
 
 usersRoutes.post(
   '/',
@@ -42,12 +46,20 @@ usersRoutes.get(
     listUserController.handle(request, response)
   },
 )
+usersRoutes.patch(
+  '/avatar',
+  isAuthenticated,
+  upload.single('avatar'),
+  (request, response) => {
+    updateAvatarController.handle(request, response)
+  },
+)
 
 usersRoutes.post(
   '/session',
   celebrate({
     [Segments.BODY]: Joi.object().keys({
-      email: Joi.string().required(),
+      email: Joi.string().email().required(),
       password: Joi.string().required(),
     }),
   }),

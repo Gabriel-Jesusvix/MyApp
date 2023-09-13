@@ -13,10 +13,10 @@ async function create() {
   )
   // Create User
   const userId = uuidV4()
-  const password = await hash('1234', 10)
+  const password = await hash('123456', 8)
   await connection.query(
     `INSERT INTO USERS(id, name, email, password, isAdmin, roleId)
-      values('${userId}', 'admin', 'gabriel.dev2@gmail.com', '${password}', true, '${roleId}')
+      values('${userId}', 'admin', 'gabriel@gmail.com', '${password}', true, '${roleId}')
     `,
   )
 
