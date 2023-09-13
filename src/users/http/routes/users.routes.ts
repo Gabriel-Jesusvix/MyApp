@@ -1,3 +1,4 @@
+import { CreateLoginController } from '@users/useCases/createLogin/CreateLoginController'
 import { CreateUserController } from '@users/useCases/createUser/CreateUserController'
 import { ListUsersController } from '@users/useCases/listUsers/ListUsersController'
 import { Segments, celebrate, Joi } from 'celebrate'
@@ -7,6 +8,7 @@ import { container } from 'tsyringe'
 const usersRoutes = Router()
 
 const createUserController = container.resolve(CreateUserController)
+const createLoginController = container.resolve(CreateLoginController)
 const listUserController = container.resolve(ListUsersController)
 
 usersRoutes.post(
@@ -24,6 +26,7 @@ usersRoutes.post(
     createUserController.handle(request, response)
   },
 )
+
 usersRoutes.get(
   '/',
   celebrate({
@@ -37,4 +40,16 @@ usersRoutes.get(
   },
 )
 
+usersRoutes.post(
+  '/session',
+  celebrate({
+    [Segments.BODY]: Joi.object().keys({
+      email: Joi.string().required(),
+      password: Joi.string().required(),
+    }),
+  }),
+  (request, response) => {
+    createLoginController.handle(request, response)
+  },
+)
 export { usersRoutes }
