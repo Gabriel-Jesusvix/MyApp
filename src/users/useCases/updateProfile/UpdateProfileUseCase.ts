@@ -1,6 +1,5 @@
 import { inject, injectable } from 'tsyringe'
 import { compare, hash } from 'bcryptjs'
-import { IRolesRepository } from '@roles/repositories/IRolesRepository'
 import { AppError } from '@shared/errors/AppError'
 import { User } from '@users/entities/User'
 import { IUsersRepository } from '@users/repositories/IUsersRepository'
@@ -17,7 +16,6 @@ type UpdateProfileUseCaseDTO = {
 export class UpdateProfileUseCase {
   constructor(
     @inject('UsersRepository') private usersRepository: IUsersRepository,
-    @inject('RolesRepository') private rolesRepository: IRolesRepository,
   ) {}
 
   async execute({
