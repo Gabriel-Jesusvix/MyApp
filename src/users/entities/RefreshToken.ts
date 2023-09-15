@@ -1,10 +1,4 @@
-import {
-  Column,
-  CreateDateColumn,
-  Entity,
-  ManyToOne,
-  PrimaryColumn,
-} from 'typeorm'
+import { Column, CreateDateColumn, Entity, PrimaryColumn } from 'typeorm'
 import { v4 as uuidv4 } from 'uuid'
 import { User } from './User'
 
@@ -27,9 +21,7 @@ export class RefreshToken {
 
   @CreateDateColumn()
   created_at: Date
-  @ManyToOne(() => User, {
-    cascade: true,
-  })
+
   user: User
 
   constructor() {
