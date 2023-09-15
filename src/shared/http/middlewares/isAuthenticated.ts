@@ -1,4 +1,3 @@
-import { AppError } from '@shared/errors/AppError'
 import { NextFunction, Request, Response } from 'express'
 import { Secret, verify } from 'jsonwebtoken'
 import authConfig from '@config/auth'
@@ -14,7 +13,11 @@ export const isAuthenticated = (
   const authHeader = request.headers.authorization
 
   if (!authHeader) {
-    throw new AppError('Failed to get authorization', 401)
+    return response.status(401).json({
+      error: true,
+      code: 'token.invalid',
+      message: 'Access token not present',
+    })
   }
   const token = authHeader.replace('Bearer', '')
   try {
@@ -25,6 +28,10 @@ export const isAuthenticated = (
     }
     return next()
   } catch (error) {
-    throw new AppError('Invalid authorization', 401)
+    return response.status(401).json({
+      error: true,
+      code: 'token.expired',
+      message: 'Access token not present',
+    })
   }
 }
